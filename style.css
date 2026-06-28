@@ -120,16 +120,12 @@ body {
 .viewport {
   position: relative;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
+  display: flex;
 }
 
 .page {
   position: absolute;
-  top: 0;        
-  left: 0;          
-  width: 100%;      
-  height: 100%;     
+  inset: 0;
   overflow-y: auto;
   overflow-x: hidden;
   padding: var(--page-pad);
@@ -738,7 +734,7 @@ body {
 }
 
 /* ---- Tablet / small desktop (768px+) ---- */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .app {
     max-width: 600px;
   }
@@ -751,8 +747,8 @@ body {
   .page-title   { font-size: 4.5rem; }
 }
 
-/* ---- Windows / desktop (1024px+) — wider, card-style layout ---- */
-@media (min-width: 1024px) {
+/* ---- Windows / desktop (1920px+) — wider, card-style layout ---- */
+@media (min-width: 1920px) {
   body {
     display: flex;
     align-items: center;
@@ -851,13 +847,5 @@ body {
 
   .dock-label {
     font-size: 0.65rem;
-  }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, .page, .cursor {
-    animation: none !important;
-    transition: none !important;
   }
 }
