@@ -225,6 +225,33 @@ body {
   letter-spacing: 0.05em;
 }
 
+/* Styling khusus untuk gambar profil Discord */
+#discord-pfp {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1; /* Memastikan foto berada di dalam ring */
+}
+
+/* Styling khusus untuk Avatar Decoration */
+#discord-deco {
+  position: absolute;
+  /* Kita buat ukurannya 120% dan digeser sedikit agar pas membingkai foto */
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  z-index: 3; /* Supaya berada paling atas menutupi avatar dan ring */
+  pointer-events: none; /* Supaya hiasan ini tidak mengganggu saat diklik/di-hover */
+}
+
+/* Memastikan ring selalu berada di atas gambar */
+.avatar-ring {
+  z-index: 2;
+}
+
 .profile-id {
   display: flex;
   flex-direction: column;

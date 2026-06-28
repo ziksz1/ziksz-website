@@ -173,3 +173,47 @@
   }
 
 })();
+
+// ============================================================
+  //  DISCORD PROFILE FETCHING (Lanyard API)
+  // ============================================================
+  const discordID = '1127233313740955729'; 
+  const lanyardAPI = `https://api.lanyard.rest/v1/users/${discordID}`;
+
+  fetch(lanyardAPI)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const user = data.data.discord_user;
+        
+        // --- 1. Mengatur Foto Profil Utama ---
+        const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`;
+        const imgEl = document.getElementById('discord-pfp');
+        const fallbackEl = document.getElementById('avatar-fallback');
+        
+        imgEl.src = avatarUrl;
+        imgEl.style.display = 'block';
+        fallbackEl.style.display = 'none';
+
+        // --- 2. Mengatur Avatar Decoration (Jika Sedang Dipakai) ---
+        const decoEl = document.getElementById('discord-deco');
+        
+        // Mengecek apakah data hiasan tersedia di profilmu
+        if (user.avatar_decoration_data && user.avatar_decoration_data.asset) {
+          // Menyusun link khusus untuk file hiasan Discord
+          const decoUrl = `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration_data.asset}.png?size=128`;
+          
+          decoEl.src = decoUrl;
+          decoEl.style.display = 'block'; // Tampilkan hiasan
+        } else {
+          // Sembunyikan jika tidak pakai hiasan
+          decoEl.style.display = 'none'; 
+        }
+        
+      } else {
+        console.warn('Gagal memuat profil Discord. Pastikan kamu sudah join server Lanyard (discord.gg/lanyard).');
+      }
+    })
+    .catch(error => {
+      console.error('Terjadi kesalahan saat memuat foto Discord:', error);
+    });
