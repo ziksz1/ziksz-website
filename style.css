@@ -1,0 +1,859 @@
+/* ============================================================
+   VARIABLES & RESET
+============================================================ */
+:root {
+  --black:        #000000;
+  --white:        #ffffff;
+  --gray-1:       #111111;
+  --gray-2:       #1c1c1c;
+  --gray-3:       #2e2e2e;
+  --gray-4:       #555555;
+  --gray-5:       #888888;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --topbar-h:     52px;
+  --dock-h:       100px;
+  --page-pad:     2rem;
+  --radius:       10px;
+  --transition:   0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow: hidden;
+  height: 100dvh;
+  cursor: none;
+}
+
+/* ============================================================
+   GRID BACKGROUND
+============================================================ */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ============================================================
+   CUSTOM CURSOR
+============================================================ */
+.cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--white);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.18s ease, height 0.18s ease;
+  mix-blend-mode: difference;
+}
+
+.cursor.expand {
+  width: 36px;
+  height: 36px;
+}
+
+/* ============================================================
+   APP SHELL
+============================================================ */
+.app {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: var(--topbar-h) 1fr;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  /* bottom padding so content doesn't hide under floating dock */
+  padding-bottom: var(--dock-h);
+}
+
+/* ============================================================
+   TOP BAR — logo only
+============================================================ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+}
+
+.topbar-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.14em;
+  color: var(--white);
+  line-height: 1;
+}
+
+.topbar-loc {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-4);
+}
+
+/* ============================================================
+   VIEWPORT — sliding pages
+============================================================ */
+.viewport {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--page-pad);
+  opacity: 0;
+  transform: translateX(60px);
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+  /* Hide scrollbar visually but keep functionality */
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-3) transparent;
+}
+
+.page::-webkit-scrollbar { width: 3px; }
+.page::-webkit-scrollbar-track { background: transparent; }
+.page::-webkit-scrollbar-thumb { background: var(--gray-3); border-radius: 4px; }
+
+.page.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Direction-aware: pages to the left slide from -60px */
+.page.from-left {
+  transform: translateX(-60px);
+}
+
+.page-inner {
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   PAGE EYEBROW & TITLE (Projects / Socials)
+============================================================ */
+.page-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gray-5);
+  margin-bottom: 0.6rem;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 10vw, 4rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 2rem;
+  color: var(--white);
+}
+
+/* ============================================================
+   PROFILE PAGE
+============================================================ */
+.profile-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding-top: 0.5rem;
+}
+
+/* Avatar */
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.avatar-wrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gray-4);
+}
+
+.avatar-initials {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--gray-2);
+  border: 1px solid var(--gray-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+
+.profile-id {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+.profile-handle {
+  font-size: 0.82rem;
+  color: var(--gray-5);
+  letter-spacing: 0.04em;
+}
+
+/* Bio */
+.profile-bio {
+  font-size: 0.97rem;
+  line-height: 1.72;
+  color: var(--gray-5);
+  padding-left: 0;
+}
+
+.profile-bio strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.bball {
+  display: inline-block;
+  animation: bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Stats row */
+.stats-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--gray-1);
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  gap: 0.25rem;
+  background: var(--gray-1);
+  transition: background var(--transition);
+}
+
+.stat:hover {
+  background: var(--gray-2);
+}
+
+.stat-n {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.stat-l {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-5);
+  text-align: center;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--gray-2);
+  flex-shrink: 0;
+}
+/* Role tags */
+.role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.role-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--gray-3);
+  border-radius: 999px;
+  color: var(--gray-5);
+  background: var(--gray-1);
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.role-tag:hover {
+  border-color: var(--gray-5);
+  color: var(--white);
+}
+
+/* Nav hint */
+.nav-hint {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--gray-4);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: 0;
+}
+
+.nav-hint i {
+  font-size: 0.6rem;
+}
+
+/* ============================================================
+   PROJECTS PAGE
+============================================================ */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.project-card {
+  background: var(--gray-1);
+  padding: 1.4rem 1.5rem;
+  border-radius: var(--radius);
+  transition: background var(--transition);
+  position: relative;
+}
+
+.project-card:last-child {
+  border-bottom: none;
+}
+
+.project-card:hover {
+  background: var(--gray-2);
+}
+
+.project-card.coming-soon {
+  opacity: 0.4;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.project-num {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--gray-4);
+}
+
+.project-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-5);
+  border: 1px solid var(--gray-3);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
+.project-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.project-desc {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--gray-5);
+  margin-bottom: 0.9rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gray-3);
+  padding-bottom: 2px;
+  transition: border-color var(--transition), gap var(--transition);
+}
+
+.project-link:hover {
+  border-color: var(--white);
+  gap: 0.7rem;
+}
+
+.project-link.muted {
+  color: var(--gray-4);
+  cursor: default;
+}
+
+/* ============================================================
+   SOCIALS PAGE
+============================================================ */
+.social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.social-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.4rem;
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--white);
+  transition: background var(--transition), padding-left var(--transition);
+}
+
+.social-row:last-child {
+  border-bottom: none;
+}
+
+.social-row:hover {
+  background: var(--gray-2);
+  padding-left: 1.8rem;
+}
+
+.social-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-3);
+  background: var(--gray-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--white);
+  flex-shrink: 0;
+  transition: border-color var(--transition);
+}
+
+.social-row:hover .social-icon-wrap {
+  border-color: var(--gray-5);
+}
+
+.social-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.social-platform {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.social-handle {
+  font-size: 0.75rem;
+  color: var(--gray-5);
+  letter-spacing: 0.03em;
+}
+
+.social-arrow {
+  font-size: 0.8rem;
+  color: var(--gray-4);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.social-row:hover .social-arrow {
+  color: var(--white);
+  transform: translate(2px, -2px);
+}
+
+.socials-note {
+  font-size: 0.85rem;
+  color: var(--gray-5);
+  line-height: 1.6;
+}
+
+.socials-note em {
+  color: var(--white);
+  font-style: normal;
+}
+
+/* ============================================================
+   DOCK — floating MacOS style
+============================================================ */
+.dock-wrap {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* constrain to same max-width as .app */
+  width: 100%;
+  max-width: 480px;
+  pointer-events: none;
+}
+
+.dock {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid var(--gray-3);
+  border-radius: 20px;
+  padding: 0.6rem 1.1rem 0.65rem;
+  pointer-events: auto;
+  /* floating shadow */
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.7),
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255,255,255,0.04) inset;
+}
+
+.dock-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: none;
+  cursor: none;
+  padding: 0 0.6rem;
+  transition: transform var(--transition);
+}
+
+.dock-item:hover {
+  transform: translateY(-6px) scale(1.12);
+}
+
+.dock-item.active {
+  transform: translateY(-4px);
+}
+
+/* Icon container */
+.dock-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--gray-2);
+  border: 1px solid var(--gray-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  color: var(--gray-5);
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition);
+}
+
+.dock-item.active .dock-icon {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+  box-shadow: 0 4px 18px rgba(255,255,255,0.15);
+}
+
+.dock-item:hover:not(.active) .dock-icon {
+  background: var(--gray-2);
+  border-color: var(--gray-5);
+  color: var(--white);
+}
+
+/* Profile / home icon — initials style */
+.dock-icon--home {
+  background: var(--gray-3);
+  border-color: var(--gray-4);
+}
+
+.dock-item.active .dock-icon--home {
+  background: var(--white);
+}
+
+.dock-initials {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: inherit;
+}
+
+/* Label */
+.dock-label {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--gray-4);
+  text-transform: uppercase;
+  transition: color var(--transition);
+  white-space: nowrap;
+}
+
+.dock-item.active .dock-label {
+  color: var(--white);
+}
+
+.dock-item:hover .dock-label {
+  color: var(--gray-5);
+}
+
+/* Active dot below icon */
+.dock-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background var(--transition);
+  margin-top: -0.15rem;
+}
+
+.dock-item.active .dock-dot {
+  background: var(--white);
+}
+
+/* No separator — cleaner floating dock */
+
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page.active .page-inner > * {
+  animation: fadeIn 0.35s ease both;
+}
+
+.page.active .page-inner > *:nth-child(1) { animation-delay: 0.04s; }
+.page.active .page-inner > *:nth-child(2) { animation-delay: 0.09s; }
+.page.active .page-inner > *:nth-child(3) { animation-delay: 0.14s; }
+.page.active .page-inner > *:nth-child(4) { animation-delay: 0.19s; }
+.page.active .page-inner > *:nth-child(5) { animation-delay: 0.24s; }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+/* ---- Android / mobile (≤ 480px) — default narrow layout ---- */
+@media (max-width: 480px) {
+  .app {
+    max-width: 100%;
+  }
+
+  .dock-wrap {
+    max-width: 100%;
+    bottom: 1rem;
+    padding: 0 1.25rem;
+  }
+
+  .page {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .page-inner {
+    max-width: 100%;
+  }
+
+  .topbar {
+    padding: 0 1.25rem;
+  }
+}
+
+/* ---- Tablet / small desktop (768px+) ---- */
+@media (min-width: 768px) {
+  .app {
+    max-width: 600px;
+  }
+
+  .dock-wrap {
+    max-width: 600px;
+  }
+
+  .profile-name { font-size: 3rem; }
+  .page-title   { font-size: 4.5rem; }
+}
+
+/* ---- Windows / desktop (1024px+) — wider, card-style layout ---- */
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+  }
+
+  .app {
+    max-width: 780px;
+    height: 88dvh;
+    max-height: 860px;
+    border-radius: 18px;
+    border: 1px solid var(--gray-3);
+    overflow: hidden;
+    box-shadow:
+      0 32px 80px rgba(0, 0, 0, 0.8),
+      0 0 0 1px rgba(255,255,255,0.04) inset;
+  }
+
+  /* Wider page layout — 2-column on profile */
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1.4rem 2rem;
+    align-content: start;
+  }
+
+  .profile-hero   { grid-column: 1 / -1; }
+  .profile-bio    { grid-column: 1 / 2; grid-row: 2; }
+  .stats-row      { grid-column: 2 / 3; grid-row: 2; flex-direction: column; height: 100%; border-radius: var(--radius); }
+  .stat-divider   { width: 80%; height: 1px; margin: 0 auto; }
+  .role-tags      { grid-column: 1 / -1; }
+  .nav-hint       { grid-column: 1 / -1; }
+
+  /* Stats vertical on desktop */
+  .stats-row {
+    flex-direction: column;
+  }
+
+  .stat {
+    flex: unset;
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Wider project & social lists */
+  .project-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .project-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .social-list {
+    gap: 0.6rem;
+  }
+
+  .page-title {
+    font-size: 5rem;
+  }
+
+  .profile-name {
+    font-size: 3.4rem;
+  }
+
+  /* Dock wider to match */
+  .dock-wrap {
+    max-width: 780px;
+    /* position relative to viewport center — clamp inside app card */
+    bottom: calc(6dvh + 1.25rem);
+  }
+
+  .dock {
+    gap: 1rem;
+    padding: 0.65rem 2rem 0.7rem;
+  }
+
+  .dock-item {
+    padding: 0 1rem;
+  }
+
+  .dock-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+    border-radius: 14px;
+  }
+
+  .dock-initials {
+    font-size: 1.6rem;
+  }
+
+  .dock-label {
+    font-size: 0.65rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, .page, .cursor {
+    animation: none !important;
+    transition: none !important;
+  }
+}

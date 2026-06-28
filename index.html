@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ziksz</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Grid Background -->
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- ==============================
+       APP SHELL
+  ============================== -->
+  <div class="app">
+
+    <!-- TOP HEADER — logo only -->
+    <header class="topbar">
+      <span class="topbar-logo">ziksz</span>
+      <span class="topbar-loc">Riau, Indonesia</span>
+    </header>
+
+    <!-- PAGE VIEWPORT -->
+    <main class="viewport">
+
+      <!-- ====== PAGE: PROJECTS (left) ====== -->
+      <section class="page" id="page-projects">
+        <div class="page-inner">
+          <p class="page-eyebrow">03 — Things I Built</p>
+          <h2 class="page-title">Projects.</h2>
+
+          <div class="project-list">
+
+            <article class="project-card">
+              <div class="project-meta">
+                <span class="project-num">01</span>
+                <span class="project-tag">Discord</span>
+              </div>
+              <h3 class="project-name">PILA</h3>
+              <p class="project-desc">Server Discord aku sendiri. Tempat nongkrong digital, ngobrolin hal random, dan bikin komunitas kecil yang asik.</p>
+              <a href="https://discord.gg/S3JkumDGxB" target="_blank" rel="noopener" class="project-link">
+                Join Server <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </article>
+
+            <article class="project-card">
+              <div class="project-meta">
+                <span class="project-num">02</span>
+                <span class="project-tag">Web</span>
+              </div>
+              <h3 class="project-name">Portfolio Site</h3>
+              <p class="project-desc">Website personal ini. Dibikin dari nol dengan HTML, CSS, dan JS.</p>
+              <span class="project-link muted">You're Here Now ✓</span>
+            </article>
+
+            <article class="project-card coming-soon">
+              <div class="project-meta">
+                <span class="project-num">03</span>
+                <span class="project-tag">Soon</span>
+              </div>
+              <h3 class="project-name">Next Project</h3>
+              <p class="project-desc">Something's cooking. Stay tuned.</p>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== PAGE: PROFILE (center / home) ====== -->
+      <section class="page active" id="page-profile">
+        <div class="page-inner profile-layout">
+
+          <!-- Avatar + name block -->
+          <div class="profile-hero">
+            <div class="avatar-wrap">
+              <div class="avatar-ring"></div>
+              <div class="avatar-initials">Z</div>
+            </div>
+            <div class="profile-id">
+              <h1 class="profile-name">ziksz</h1>
+              <p class="profile-handle">@ziksz_</p>
+            </div>
+          </div>
+
+          <!-- Bio -->
+          <p class="profile-bio">
+            16 y/o from <strong>Riau, Indonesia</strong>. Baller, Discord admin, pelajar (terpaksa). Ngelola server, main basket, dan pura-pura produktif tiap hari. <span class="bball">🏀</span>
+          </p>
+
+          <!-- Stats row -->
+          <div class="stats-row">
+            <div class="stat">
+              <span class="stat-n">16</span>
+              <span class="stat-l">Tahun Eksis</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-n">∞</span>
+              <span class="stat-l">Jam Discord</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-n">2</span>
+              <span class="stat-l">Server Aktif</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-n">1</span>
+              <span class="stat-l">Bola Basket</span>
+            </div>
+          </div>
+
+          <!-- Roles / tags -->
+          <div class="role-tags">
+            <span class="role-tag">🏀 Baller</span>
+            <span class="role-tag">💬 Discord Admin</span>
+            <span class="role-tag">📚 Pelajar</span>
+            <span class="role-tag">👑 Owner in PILA</span>
+            <span class="role-tag">🇮🇩 Indo Discord Gen 14</span>
+          </div>
+
+          <!-- Quick nav hint -->
+          <div class="nav-hint">
+            <span><i class="fa-solid fa-chevron-left"></i> Projects</span>
+            <span>Socials <i class="fa-solid fa-chevron-right"></i></span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ====== PAGE: SOCIALS (right) ====== -->
+      <section class="page" id="page-socials">
+        <div class="page-inner">
+          <p class="page-eyebrow">02 — Find Me Here</p>
+          <h2 class="page-title">Socials.</h2>
+
+          <div class="social-list">
+
+            <a href="https://www.instagram.com/r.zikriadityaa/" target="_blank" rel="noopener" class="social-row">
+              <div class="social-left">
+                <div class="social-icon-wrap">
+                  <i class="fa-brands fa-instagram"></i>
+                </div>
+                <div class="social-info">
+                  <span class="social-platform">Instagram</span>
+                  <span class="social-handle">@r.zikriadityaa</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+            </a>
+
+            <a href="https://discord.gg/Anp4eERUEk" target="_blank" rel="noopener" class="social-row">
+              <div class="social-left">
+                <div class="social-icon-wrap">
+                  <i class="fa-brands fa-discord"></i>
+                </div>
+                <div class="social-info">
+                  <span class="social-platform">Discord Server</span>
+                  <span class="social-handle">PILA</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+            </a>
+
+            <a href="https://discord.com/users/1127233313740955729" target="_blank" rel="noopener" class="social-row">
+              <div class="social-left">
+                <div class="social-icon-wrap">
+                  <i class="fa-solid fa-message"></i>
+                </div>
+                <div class="social-info">
+                  <span class="social-platform">Discord</span>
+                  <span class="social-handle">Dm aku disini jika ingin mendapatkan info tentang seputar Discord./span>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+            </a>
+
+          </div>
+
+          <p class="socials-note">Aku ramah kok, <em>selama kamu juga ramah.</em> 😂</p>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- DOCK NAV (MacOS style) -->
+    <footer class="dock-wrap">
+      <nav class="dock" role="navigation" aria-label="Main navigation">
+        <button class="dock-item" data-page="projects" aria-label="Projects">
+          <div class="dock-icon">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+          <span class="dock-label">Projects</span>
+          <span class="dock-dot"></span>
+        </button>
+
+        <button class="dock-item active" data-page="profile" aria-label="Profile">
+          <div class="dock-icon dock-icon--home">
+            <span class="dock-initials">Z</span>
+          </div>
+          <span class="dock-label">Profile</span>
+          <span class="dock-dot"></span>
+        </button>
+
+        <button class="dock-item" data-page="socials" aria-label="Socials">
+          <div class="dock-icon">
+            <i class="fa-solid fa-share-nodes"></i>
+          </div>
+          <span class="dock-label">Socials</span>
+          <span class="dock-dot"></span>
+        </button>
+      </nav>
+    </footer>
+
+  </div><!-- /.app -->
+
+  <script src="script.js"></script>
+</body>
+</html>
