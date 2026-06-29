@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ziksz</title>
-  <link rel="icon" type="image/png" href="assets/logo/z.png" />
+  <link rel="icon" type="image/png" href="assets/photo/ziksz-logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,7 +23,7 @@
           <circle id="progress-bar" class="progress-ring__bar" stroke="var(--white)" stroke-width="4" fill="transparent" r="60" cx="70" cy="70"/>
         </svg>
         <div class="loading-logo">
-          <img src="assets/logo/z.png" alt="Logo Ziks" id="loading-logo-img" />
+          <img src="assets/photo/ziksz-logo.png" alt="Logo Ziks" id="loading-logo-img" />
         </div>
       </div>
       <div id="loading-text" class="loading-text">0%</div>
@@ -43,7 +43,7 @@
 
     <header class="topbar">
       <div class="topbar-logo-wrap">
-        <img src="assets/logo/z.png" alt="Ziks Logo" class="topbar-img" />
+        <img src="assets/photo/ziksz-logo.png" alt="Ziks Logo" class="topbar-img" />
       </div>
       <span class="topbar-loc">&copy; 2026 ziksz_, Riau, Indonesia</span>
     </header>
@@ -54,19 +54,11 @@
       <!-- ====== PAGE: BLOG ARTICLES (left 2) ====== -->
       <section class="page" id="page-blog">
         <div class="page-inner">
-          <p class="page-eyebrow">My Thoughts</p>
           <h2 class="page-title">Blog Articles.</h2>
-
+          <p class="page-eyebrow">My Thoughts</p>
           <div class="blog-list">
 
-            <article class="blog-card coming-soon">
-              <div class="blog-meta">
-                <span class="blog-num">01</span>
-                <span class="blog-tag">Soon</span>
-              </div>
-              <h3 class="blog-name">Next Blog Post</h3>
-              <p class="blog-desc">Stay tuned.</p>
-            </article>
+            <p>Coming soon.</p>
 
           </div>
         </div>
@@ -75,8 +67,8 @@
       <!-- ====== PAGE: PROJECTS (left 1) ====== -->
       <section class="page" id="page-projects">
         <div class="page-inner">
-          <p class="page-eyebrow">Things I Built</p>
           <h2 class="page-title">Projects.</h2>
+          <p class="page-eyebrow">Things I Built</p>
 
           <div class="project-list">
 
@@ -169,8 +161,8 @@
       <!-- ====== PAGE: SOCIALS (right 1) ====== -->
       <section class="page" id="page-socials">
         <div class="page-inner">
-          <p class="page-eyebrow">Find Me Here</p>
           <h2 class="page-title">Socials.</h2>
+          <p class="page-eyebrow">Find Me Here</p>
 
           <div class="social-list">
 
@@ -222,25 +214,49 @@
       <section class="page" id="page-gallery">
   <div class="page-inner">
     <h2 class="page-title">Gallery.</h2>
+    <p class="page-eyebrow">My gallery</p>
     
     <div class="gallery-filter-nav">
       <button class="gallery-filter-btn active" data-filter="all">All</button>
-      <button class="gallery-filter-btn" data-filter="photo">Photos</button>
-      <button class="gallery-filter-btn" data-filter="video">Videos</button>
+      <button class="gallery-filter-btn" data-filter="photo">Photo</button>
+      <button class="gallery-filter-btn" data-filter="video">Video</button>
     </div>
     
     <div class="gallery-grid">
       
-      <div class="gallery-item type-photo">
-        <img src="assets/logo/z.png" alt="Gallery Photo 1" loading="lazy">
-      </div>
-
-      <div class="gallery-item type-video">
-        <video src="assets/video1.mp4" controls preload="metadata"></video>
-      </div>
-      
+  <div class="gallery-item type-photo fade-in">
+    <img src="assets/photo/ziksz-logo.png" alt="Ziksz Official Logo" data-desc="Ini adalah logo resmi dari aku yang mencerminkan identitas minimalis, modern, dan profesional untuk branding portofolio tahun 2026." loading="lazy">
+    <div class="gallery-item-overlay">
+      <span class="gallery-item-title">ziksz logo</span>
     </div>
   </div>
+
+  <div class="gallery-item type-video fade-in">
+    <video src="assets/video/ziks_pa_pa_pa1.mp4" data-title="Jj boom pa boom pa" data-desc="Jj boom pa boom pa." preload="metadata"></video>
+    <div class="gallery-item-overlay">
+      <span class="gallery-item-title">Jj boom pa boom pa</span>
+    </div>
+  </div>
+  
+</div>
+
+<div id="gallery-lightbox" class="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <div class="lightbox-content-wrap">
+    
+    <div class="lightbox-left">
+      <div class="lightbox-content"></div>
+    </div>
+    
+    <div class="lightbox-right">
+      <h3 class="lightbox-caption"></h3>
+      <p class="lightbox-description"></p>
+    </div>
+
+  </div>
+</div>
+  
+</div>
 </section>
 
     </main>
@@ -281,16 +297,19 @@
         </button>
 
         <button class="dock-item" data-page="gallery" aria-label="Gallery">
-         <div class="dock-icon"><i class="fa-solid fa-images"></i></div>
+         <div class="dock-icon">
+           <i class="fa-solid fa-images"></i>
+         </div>
          <span class="dock-label">Gallery</span>
-        <span class="dock-dot"></span>
+         <span class="dock-dot"></span>
         </button>
 
       </nav>
     </footer>
-
+  
   </div><!-- /.app -->
 
   <script src="script.js"></script>
+
 </body>
 </html>

@@ -183,6 +183,48 @@
     });
   });
 
+// --- FITUR FILTER GALERI (FOTO & VIDEO + SOUND EFFECT) ---
+document.addEventListener('DOMContentLoaded', () => {
+  const filterButtons = document.querySelectorAll('.gallery-filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // 🔊 TAMBAHKAN SOUND EFFECT DI SINI:
+      // Memanggil fungsi playClick bawaan template (bisa pakai 'dock' atau 'ui')
+      if (typeof playClick === 'function') {
+        playClick('dock'); 
+      }
+
+      // 1. Ubah status tombol aktif
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+
+      // 2. Ambil kategori filter yang dipilih (all, photo, atau video)
+      const filterValue = this.getAttribute('data-filter');
+
+      // 3. Saring item galeri
+      galleryItems.forEach(item => {
+        // Hapus class animasi sebelumnya
+        item.classList.remove('fade-in');
+
+        if (filterValue === 'all') {
+          item.classList.remove('hide');
+          item.classList.add('fade-in');
+        } else {
+          // Cek apakah item memiliki class target (e.g., 'type-photo' atau 'type-video')
+          if (item.classList.contains(`type-${filterValue}`)) {
+            item.classList.remove('hide');
+            item.classList.add('fade-in');
+          } else {
+            item.classList.add('hide');
+          }
+        }
+      });
+    });
+  });
+});
+
   // ---- Initial state ----
   updateControls(currentPage);
 
@@ -432,3 +474,181 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// --- FITUR LIGHTBOX GALERI dengan JUDUL (VIEW FULL MEDIA + CAPTION) ---
+document.addEventListener('DOMContentLoaded', () => {
+  const lightbox = document.getElementById('gallery-lightbox');
+  const lightboxContent = lightbox.querySelector('.lightbox-content');
+  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      // 🔊 Mainkan sound effect klik bawaan saat media dibuka
+      if (typeof playClick === 'function') playClick('dock');
+
+      // Bersihkan konten lama di dalam modal
+      lightboxContent.innerHTML = '';
+      lightboxCaption.textContent = '';
+
+      const img = item.querySelector('img');
+      const video = item.querySelector('video');
+
+      if (img) {
+        // Jika Foto: Duplikat elemen gambar
+        const fullImg = document.createElement('img');
+        fullImg.src = img.src;
+        fullImg.alt = img.alt;
+        lightboxContent.appendChild(fullImg);
+
+        // Ambil judul dari atribut alt gambar
+        lightboxCaption.textContent = img.alt || "Untitled Photo";
+        
+      } else if (video) {
+        // Jika Video: Duplikat elemen video
+        const fullVideo = document.createElement('video');
+        fullVideo.src = video.src;
+        fullVideo.controls = true;
+        fullVideo.autoplay = true;
+        lightboxContent.appendChild(fullVideo);
+
+        // Ambil judul dari atribut data-title video
+        lightboxCaption.textContent = video.getAttribute('data-title') || "Untitled Video";
+      }
+
+      // Tampilkan modal lightbox
+      lightbox.style.display = 'flex';
+    });
+  });
+
+  // Fungsi menutup Lightbox
+  function closeLightbox() {
+    const activeVideo = lightboxContent.querySelector('video');
+    if (activeVideo) activeVideo.pause();
+    lightbox.style.display = 'none';
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target === document.querySelector('.lightbox-content-wrap')) {
+      closeLightbox();
+    }
+  });
+});
+
+// --- FITUR FILTER GALERI (FIXED ANIMATION FOR ALL MEDIA) ---
+document.addEventListener('DOMContentLoaded', () => {
+  const filterButtons = document.querySelectorAll('.gallery-filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      if (typeof playClick === 'function') playClick('dock');
+
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+
+      const filterValue = this.getAttribute('data-filter');
+
+      galleryItems.forEach(item => {
+        // Hapus class agar animasi bisa di-trigger ulang dari awal
+        item.classList.remove('fade-in');
+        item.classList.remove('hide');
+
+        // Gunakan void untuk memaksa browser merefresh/restart animasi CSS
+        void item.offsetWidth; 
+
+        if (filterValue === 'all') {
+          item.classList.add('fade-in');
+        } else {
+          if (item.classList.contains(`type-${filterValue}`)) {
+            item.classList.add('fade-in');
+          } else {
+            item.classList.add('hide');
+          }
+        }
+      });
+    });
+  });
+});
+
+// --- FITUR LIGHTBOX GALERI DUA KOLOM (MEDIA KIRI, TEKS KANAN) ---
+  const lightbox = document.getElementById('gallery-lightbox');
+  const lightboxContent = lightbox ? lightbox.querySelector('.lightbox-content') : null;
+  const lightboxCaption = lightbox ? lightbox.querySelector('.lightbox-caption') : null;
+  const lightboxDesc = lightbox ? lightbox.querySelector('.lightbox-description') : null;
+  const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close') : null;
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  if (lightbox && lightboxContent && lightboxCaption && lightboxDesc) {
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        // 🔊 Sound effect bawaan saat media dibuka
+        if (typeof playClick === 'function') playClick('dock');
+
+        // Bersihkan konten lama sebelum diisi baru
+        lightboxContent.innerHTML = '';
+        lightboxCaption.textContent = '';
+        lightboxDesc.textContent = '';
+
+        const img = item.querySelector('img');
+        const video = item.querySelector('video');
+        
+        // Ambil Judul dari elemen .gallery-item-title
+        const itemTitleEl = item.querySelector('.gallery-item-title');
+        const itemTitleText = itemTitleEl ? itemTitleEl.textContent : "Untitled";
+        
+        // Ambil Deskripsi dari atribut data-desc milik media
+        let itemDescText = "Tidak ada deskripsi untuk media ini.";
+
+        if (img) {
+          // Jika Foto: Ambil deskripsi & duplikat gambar
+          itemDescText = img.getAttribute('data-desc') || itemDescText;
+          
+          const fullImg = document.createElement('img');
+          fullImg.src = img.src;
+          fullImg.alt = img.alt;
+          lightboxContent.appendChild(fullImg);
+          
+        } else if (video) {
+          // Hentikan video background agar audio tidak tabrakan/double
+          video.pause();
+          
+          // Jika Video: Ambil deskripsi & duplikat video beserta fiturnya
+          itemDescText = video.getAttribute('data-desc') || itemDescText;
+          
+          const fullVideo = document.createElement('video');
+          fullVideo.src = video.src;
+          fullVideo.controls = true;
+          fullVideo.autoplay = true; // Langsung berputar otomatis di dalam pop-up
+          lightboxContent.appendChild(fullVideo);
+        }
+
+        // Inject teks judul dan deskripsi ke kolom kanan
+        lightboxCaption.textContent = itemTitleText;
+        lightboxDesc.textContent = itemDescText;
+
+        // Tampilkan modal lightbox
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    // Fungsi menutup Lightbox & membersihkan resource video
+    function closeLightbox() {
+      const activeVideo = lightboxContent.querySelector('video');
+      if (activeVideo) {
+        activeVideo.pause();
+        activeVideo.src = ""; // Force stop video
+      }
+      lightbox.style.display = 'none';
+    }
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target === document.querySelector('.lightbox-content-wrap')) {
+        closeLightbox();
+      }
+    });
+  }
