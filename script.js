@@ -222,6 +222,23 @@
     }
   }, { passive: true });
 
+  // --- PROJECT CARDS CLICK ---
+const projectCards = document.querySelectorAll('.project-card');
+projectCards.forEach(card => {
+  card.addEventListener('click', () => {
+    // 1. Tetap mainkan efek suara klik bawaan portofolio kamu
+    playClick('ui');
+
+    // 2. Ambil URL dari atribut 'data-href'
+    const url = card.getAttribute('data-href');
+    
+    // 3. Buka URL di tab baru jika atribut data-href tersedia
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  });
+});
+
   // ============================================================
   //  Keyboard navigation
   // ============================================================
