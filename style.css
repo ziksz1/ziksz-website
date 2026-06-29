@@ -983,16 +983,32 @@ body {
     padding: 0.75rem 1rem;
   }
 
-  /* Wider project & social lists */
-  .project-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-  }
+/* --- 1. PENGATURAN KONTAINER UTAMA UTK 3 KOLOM --- */
+.projects-list {
+  display: grid !important; /* Memaksa mengubah flex menjadi grid */
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* Tepat 3 kolom ke kanan */
+  gap: 1.5rem; /* Jarak antar project ke kanan */
+  margin-top: 1.5rem;
+  width: 100%;
+  align-items: stretch; /* Memastikan tinggi semua card sama rata */
+}
 
-  .project-card:last-child {
-    grid-column: 1 / -1;
-  }
+/* --- 2. PENYESUAIAN KARTU PROJECT --- */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--gray-1);
+  border: 1px solid var(--gray-3);
+  padding: var(--page-pad);
+  border-radius: var(--radius);
+  transition: border-color var(--transition), transform var(--transition);
+  
+  /* JALUR PENYELAMAT: */
+  flex-shrink: 1 !important;  /* Izinkan mengecil agar pas di dalam 3 kolom */
+  width: 100% !important;     /* Lebar mengikuti grid pembagi 3 */
+  margin: 0 !important;       /* Hapus margin sisa */
+}
 
   .social-list {
     gap: 0.6rem;
@@ -1208,4 +1224,12 @@ body.loaded .grid-bg {
 .topbar:hover .topbar-img,
 .topbar:hover .topbar-loc {
   opacity: 1;
+}
+
+/* Responsive Layout: Otomatis 1 kolom ke bawah saat dibuka di HP */
+@media (max-width: 768px) {
+  .projects-list {
+    grid-template-columns: repeat(1, 1fr) !important;
+    gap: 1rem;
+  }
 }
