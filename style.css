@@ -711,19 +711,25 @@ body {
 .dock {
   display: flex;
   align-items: flex-end;
-  gap: 0.2rem; /* Jarak antar tombol dirapatkan (sebelumnya 0.5rem) */
-  background: rgba(20, 20, 20, 0.92);
-  border: 1px solid var(--gray-3);
+  gap: 0.2rem;
+  
+  /* 1. Kurangi opacity background menjadi sekitar 0.4 - 0.6 agar blur terlihat */
+  background: rgba(20, 20, 20, 0.45); 
+  
+  /* 2. Efek blur (glassmorphism) */
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px); /* Dukungan untuk browser Safari / iOS */
+  
+  /* 3. Optimasi performa untuk mencegah lag (Hardware Acceleration) */
+  transform: translateZ(0);
+  
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Sedikit disesuaikan agar tepi lebih halus dengan blur */
   border-radius: 20px;
-  padding: 0.6rem 0.8rem 0.65rem; /* Padding kiri-kanan sedikit dikurangi */
+  padding: 0.6rem 0.8rem 0.65rem;
   pointer-events: auto;
   overflow: visible;
-  max-width: 95vw; /* Mencegah dock melewati batas layar (maksimal 95% lebar layar) */
-  /* floating shadow */
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.7),
-    0 2px 8px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255,255,255,0.04) inset;
+  max-width: 95vw;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.04) inset;
 }
 
 .dock-item {
@@ -739,6 +745,28 @@ body {
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: visible;
   flex-shrink: 1; /* Mengizinkan tombol sedikit mengecil menyesuaikan layar */
+  
+  /* --- PEMBARUAN WARNA TEMA --- */
+  color: rgba(255, 255, 255, 0.6); /* Warna teks/label bawaan abu-abu terang */
+}
+
+/* Warna ikon default sebelum di-hover */
+.dock-item .dock-icon {
+  color: rgba(255, 255, 255, 0.65); 
+  transition: color 0.2s ease, filter 0.2s ease;
+}
+
+/* Warna ketika tombol aktif atau sedang di-hover */
+.dock-item:hover,
+.dock-item.active {
+  color: var(--white); /* Teks/label menjadi putih bersih */
+}
+
+.dock-item:hover .dock-icon,
+.dock-item.active .dock-icon {
+  color: var(--white); /* Ikon menjadi putih bersih */
+  /* Efek glow tipis yang elegan cocok untuk tema gelap */
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4)); 
 }
 
 .dock-item:hover {
