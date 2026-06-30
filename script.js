@@ -72,7 +72,7 @@
   }
 
   // Page order (left → right)
-  const PAGE_ORDER = ['blog', 'gallery', 'projects', 'profile', 'socials', 'services', 'contact',];
+  const PAGE_ORDER = ['blog', 'projects', 'gallery', 'profile', 'socials', 'services', 'contact',];
 
   // ---- State ----
   let currentPage = 'profile';

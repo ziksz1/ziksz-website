@@ -1745,15 +1745,19 @@ body.loaded .grid-bg {
   background: var(--white);
   color: var(--black);
   border: none;
-  padding: 0.8rem 1.5rem;
   border-radius: 30px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s;
+  display: inline-flex; /* Mengikuti ukuran teks, tidak meluas penuh */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s, opacity 0.2s;
 }
 
 .submit-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.04);
+  opacity: 0.9;
 }
 
 /* ============================================================
