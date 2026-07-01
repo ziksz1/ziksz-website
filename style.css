@@ -1376,44 +1376,33 @@ body.loaded .grid-bg {
    FIX VISUAL GALERI (FOTO & VIDEO)
 ============================================================ */
 
-/* Struktur Grid Pembagi 3 Kolom */
+/* Mengatur grid agar menampilkan 2 gambar per baris */
 .gallery-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 1.25rem;
-  margin-top: 1.5rem;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 kolom dengan lebar seimbang */
+  gap: 1rem; /* Jarak antar gambar */
 }
 
-/* Bingkai setiap foto / video */
+/* Menyesuaikan ukuran kotak per item */
 .gallery-item {
+  position: relative;
   background: var(--gray-1);
   border: 1px solid var(--gray-3);
-  aspect-ratio: 1 / 1; /* Memaksa bentuk kotak presisi (1:1) */
+  
+  /* HAPUS atau KOMENTARI baris 'aspect-ratio: 1 / 1;' jika ada sebelumnya */
+  /* aspect-ratio: 1 / 1; */ 
+  
   border-radius: var(--radius);
   overflow: hidden;
-  position: relative;
-  transition: border-color var(--transition), transform var(--transition);
-  
-  /* Pastikan default-nya terlihat */
-  display: block !important; 
-  opacity: 1;
+  cursor: pointer;
+  transition: transform var(--transition);
 }
 
-/* Pengaturan Foto di Dalam Bingkai */
-.gallery-item img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important; /* Memastikan foto penuh tanpa distorsi */
-  display: block;
-}
-
-/* Pengaturan Video di Dalam Bingkai */
+/* Pengaturan Foto dan Video di Dalam Bingkai */
+.gallery-item img, 
 .gallery-item video {
   width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important; /* Memastikan video penuh mengikuti kotak */
-  background: #000;
+  height: auto !important; /* Biarkan tinggi menyesuaikan gambar asli agar tidak terpotong */
   display: block;
 }
 
